@@ -9,3 +9,9 @@ users = 10.times.map do
                 :email      => Faker::Internet.email,
                 :password   => 'password' )
 end
+
+
+#create 10 dummy todos
+todos = 10.times.map do
+  Todo.create!( :title => Faker::Book.title )
+end
