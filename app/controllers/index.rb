@@ -14,15 +14,15 @@ delete '/todos/:id' do
 
   #get params from url
   @todo = Todo.find(params[:id]) #define todo to delete
-
-  if @todo.destroy #delete todo
-    status 200
+  @todo.destroy #delete todo
+  
+  @todos = Todo.all
+  if request.xhr?
+    content_type :json
+    {todo_id: params[:id]}.to_json
   else
-    status 422
+    erb :index
   end
-
-
-
 
 
 
@@ -31,6 +31,7 @@ end
 
 
 post '/todos' do
+
 puts '=' * 80
 puts params[:todo]
 puts '=' * 80
@@ -41,10 +42,8 @@ puts '=' * 80
   @todo = Todo.new #create new todo
   @todo.title = (params[:todo])
   @todo.save
-  if @todo.save #saves new todo or returns false if unsuccessful
-    redirect '/' #links back to todos index page
-  else
-    erb :errors #shows an errors view you define
-  end
+  
+  content_type :json
+  {task: params[:todo], id: @todo.id}.to_json
 
 end

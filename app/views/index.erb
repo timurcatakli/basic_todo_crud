@@ -7,29 +7,21 @@
         <h1>Todo App</h1>
         <h2>You have <%= @todos.count %> todos</h2>
         <hr>
-      
-        <!-- Iterate through todos start here -->
-        <% @todos.each do |todo| %>
-          <p>
-            <span class="glyphicon glyphicon-record" aria-hidden="true"></span> (<%= todo.id %>) - <%= todo.title %>
-            <div id="delete_div">
-              <form action="/todos/<%= todo.id %>" id= "delete_form" method="POST">
-                <button type="submit" id="delete_button" class="btn btn-primary">Delete</button>
-                <input type="hidden" name="_method" value="delete">
-              </form>
-            </div>
-          </p>
-        <% end %>
+        <ul id="todos">
+          <!-- Iterate through todos start here -->
+          <% @todos.each do |todo| %>
+              <li id="todo_<%= todo.id %>">(<%= todo.id %>) - <%= todo.title %> - <a href='/todos/<%= todo.id %>' id="delete_link">Delete</a></li>
+          <% end %>
       <!-- Iterate through todos start here -->
-
+        </ul>
 
 
 <hr>
 <h2>New ToDo Form</h2>
-<form action="/todos" method="POST">
+<form action="/todos" id="new_todo" method="POST">
   <fieldset class="form-group">
     <label for="inputToDo">To Do Title</label>
     <input type="text" class="form-control" id="inputToDo" name="todo" value="<%= Faker::Book.title %>" placeholder="Enter todo" required>
   </fieldset>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" id="new_submit" class="btn btn-primary">Submit</button>
 </form>
